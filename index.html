@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A little surprise — open when you're ready." />
+  <meta property="og:title" content="Happy Birthday — A Little Surprise" />
+  <meta property="og:description" content="Someone special made this for you. Open the link to see." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <title>Happy Birthday — A Little Surprise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink: #ff6b9d;
+      --coral: #ff8e72;
+      --lavender: #c084fc;
+      --mint: #6ee7b7;
+      --gold: #fcd34d;
+      --deep: #1e1033;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Nunito", system-ui, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #ffecd2 0%,
+        #fcb69f 25%,
+        #ff9a9e 50%,
+        #fecfef 75%,
+        #e0c3fc 100%
+      );
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      overflow-x: hidden;
+      color: var(--deep);
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .sparkles span {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      background: linear-gradient(120deg, #ec4899, #8b5cf6, #f59e0b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 4px 30px rgba(236, 72, 153, 0.35);
+      animation: titlePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.08); }
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: rgba(30, 16, 51, 0.85);
+      margin-bottom: 2.5rem;
+      max-width: 28em;
+      line-height: 1.5;
+    }
+
+    .question-card {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 2rem 1.75rem;
+      box-shadow:
+        0 20px 50px rgba(139, 92, 246, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .question-card p {
+      font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 1.75rem;
+      color: var(--deep);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-family: inherit;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, font-size 0.35s ease, padding 0.35s ease;
+    }
+
+    #btnYes {
+      background: linear-gradient(135deg, var(--pink), #db2777);
+      color: white;
+      padding: 0.85rem 2rem;
+      font-size: 1.15rem;
+      box-shadow: 0 8px 24px rgba(219, 39, 119, 0.45);
+    }
+
+    #btnYes:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 32px rgba(219, 39, 119, 0.55);
+    }
+
+    #btnNo {
+      background: rgba(255, 255, 255, 0.9);
+      color: #64748b;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: 2px solid rgba(148, 163, 184, 0.5);
+    }
+
+    #btnNo:hover {
+      background: rgba(248, 250, 252, 1);
+    }
+
+    /* Mail popup overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 16, 51, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mail-stage {
+      position: relative;
+      perspective: 800px;
+    }
+
+    .envelope {
+      width: min(280px, 85vw);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.35s ease;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
+    }
+
+    .envelope:hover {
+      transform: translateY(-6px) rotateX(5deg);
+    }
+
+    .envelope.opened {
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .env-body {
+      background: linear-gradient(145deg, #fce7f3, #fbcfe8);
+      border-radius: 12px;
+      padding: 2rem 1rem 3rem;
+      position: relative;
+      border: 3px solid rgba(236, 72, 153, 0.35);
+    }
+
+    .env-flap {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-bottom: 90px solid #f9a8d4;
+      filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.08));
+    }
+
+    @media (max-width: 320px) {
+      .env-flap {
+        border-left-width: min(140px, 42vw);
+        border-right-width: min(140px, 42vw);
+      }
+    }
+
+    .stamp {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 2rem;
+      opacity: 0.9;
+    }
+
+    .tap-hint {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: rgba(30, 16, 51, 0.75);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Letter panel after open */
+    .letter-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .letter-overlay.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .letter-paper {
+      background: linear-gradient(180deg, #fffef8 0%, #fff5f8 100%);
+      max-width: 420px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem 1.75rem;
+      border-radius: 8px;
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 182, 193, 0.5);
+      position: relative;
+      transform: scale(0.92);
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .letter-overlay.show .letter-paper {
+      transform: scale(1);
+    }
+
+    .letter-paper h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.5rem;
+      color: #be185d;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .letter-paper p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #4b5563;
+      margin-bottom: 1rem;
+    }
+
+    .letter-paper .sign {
+      margin-top: 1.5rem;
+      font-style: italic;
+      color: #db2777;
+      text-align: right;
+    }
+
+    .close-letter {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(244, 114, 182, 0.25);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.25rem;
+      line-height: 1;
+      color: #9d174d;
+      transition: background 0.2s;
+    }
+
+    .close-letter:hover {
+      background: rgba(244, 114, 182, 0.45);
+    }
+
+    /* Rain canvas layer */
+    #rainLayer {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .rain-item {
+      position: absolute;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      animation: pour linear forwards;
+      opacity: 0.95;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes pour {
+      0% {
+        transform: translateY(-10vh) translateX(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) translateX(var(--drift)) rotate(360deg);
+        opacity: 0.85;
+      }
+    }
+
+    footer.note {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: rgba(30, 16, 51, 0.45);
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <h1>Happy Birthday</h1>
+    <p class="subtitle">To the one who makes ordinary days feel like confetti and sunshine.</p>
+
+    <div class="question-card">
+      <p>Do you want to see your surprise?</p>
+      <div class="btn-row">
+        <button type="button" id="btnYes">YES</button>
+        <button type="button" id="btnNo">NO</button>
+      </div>
+    </div>
+
+    <p class="note footer">Made with love — tap YES when you're ready.</p>
+  </main>
+
+  <!-- Mail popup -->
+  <div class="overlay" id="mailOverlay" role="dialog" aria-modal="true" aria-labelledby="mailTitle">
+    <div class="mail-stage">
+      <div class="envelope" id="envelope" tabindex="0">
+        <div class="env-flap" aria-hidden="true"></div>
+        <div class="env-body">
+          <span class="stamp" aria-hidden="true">💌</span>
+          <p id="mailTitle" style="font-size: 1.1rem; font-weight: 700; color: #9d174d; padding-top: 2rem;">
+            For you, with all my heart
+          </p>
+          <p style="margin-top: 0.75rem; font-size: 0.95rem; color: #6b7280;">Tap the envelope to open</p>
+        </div>
+      </div>
+      <p class="tap-hint">👆 Open your mail</p>
+    </div>
+  </div>
+
+  <div id="rainLayer" aria-hidden="true"></div>
+
+  <div class="letter-overlay" id="letterOverlay">
+    <article class="letter-paper">
+      <button type="button" class="close-letter" id="closeLetter" aria-label="Close letter">×</button>
+      <h2>My love,</h2>
+      <p>
+        Today the world gets to celebrate you — but every day, I'm the lucky one who gets to love you.
+        Your laugh is my favorite song, your smile my favorite view, and your heart my favorite place to be.
+      </p>
+      <p>
+        On your birthday I wish you endless joy, cozy moments, wild little adventures, and all the cake your heart desires.
+        May this year wrap you in warmth, surprise you with kindness, and remind you how deeply you are cherished.
+      </p>
+      <p>
+        Happy birthday to my world and the one who holds my heart! You make every day feel like a celebration just by being in it, and I'm so lucky I get to walk through life with you. You still give me butterflies every time you walk into the room, and you somehow manage to look even better every single year. Thank you for being my partner, my best friend, and my home; you truly are the best gift I've ever received. I can't wait to have you all to myself later to celebrate properly and shower you with all the love and kisses you deserve. Here's to making this your best birthday yet—I love you more than words can say!
+      </p>
+      <p class="sign">Forever yours,<br />with hugs, kisses, and a thousand wishes 🎂💖✨</p>
+    </article>
+  </div>
+
+  <script>
+    (function () {
+      const sparkContainer = document.getElementById("sparkles");
+      for (let i = 0; i < 24; i++) {
+        const s = document.createElement("span");
+        s.style.left = Math.random() * 100 + "%";
+        s.style.animationDelay = Math.random() * 8 + "s";
+        s.style.animationDuration = 6 + Math.random() * 6 + "s";
+        sparkContainer.appendChild(s);
+      }
+
+      const btnYes = document.getElementById("btnYes");
+      const btnNo = document.getElementById("btnNo");
+      let noClicks = 0;
+
+      const baseYesSize = 1.15;
+      const baseNoSize = 1;
+      const shrinkStep = 0.12;
+      const growStep = 0.1;
+
+      btnNo.addEventListener("click", function () {
+        noClicks++;
+        const yesRem = Math.min(baseYesSize + noClicks * growStep, 2.4);
+        const noRem = Math.max(baseNoSize - noClicks * shrinkStep, 0.35);
+        btnYes.style.fontSize = yesRem + "rem";
+        btnYes.style.padding =
+          (0.55 + noClicks * 0.08) + "rem " + (1.6 + noClicks * 0.15) + "rem";
+        btnNo.style.fontSize = noRem + "rem";
+        btnNo.style.padding =
+          (0.45 - noClicks * 0.03) + "rem " + (1.2 - noClicks * 0.08) + "rem";
+      });
+
+      const mailOverlay = document.getElementById("mailOverlay");
+      const envelope = document.getElementById("envelope");
+      const rainLayer = document.getElementById("rainLayer");
+      const letterOverlay = document.getElementById("letterOverlay");
+      const closeLetter = document.getElementById("closeLetter");
+      let mailOpened = false;
+
+      const symbols = ["💖", "💕", "💗", "✨", "🎂", "🧁", "🎀", "🌸", "⭐", "🌈", "💝", "😍", "🥰", "💐"];
+
+      function spawnRain(durationMs) {
+        const start = Date.now();
+        const spawnInterval = 90;
+
+        function tick() {
+          if (Date.now() - start > durationMs) return;
+          for (let i = 0; i < 5; i++) {
+            const el = document.createElement("span");
+            el.className = "rain-item";
+            el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            el.style.left = Math.random() * 100 + "%";
+            el.style.top = "-5vh";
+            const drift = (Math.random() - 0.5) * 120;
+            el.style.setProperty("--drift", drift + "px");
+            el.style.animationDuration = 2.5 + Math.random() * 2.5 + "s";
+            el.style.animationDelay = Math.random() * 0.3 + "s";
+            rainLayer.appendChild(el);
+            el.addEventListener("animationend", function () {
+              el.remove();
+            });
+          }
+          setTimeout(tick, spawnInterval);
+        }
+        tick();
+      }
+
+      btnYes.addEventListener("click", function () {
+        mailOverlay.classList.add("visible");
+      });
+
+      function openMail() {
+        if (mailOpened) return;
+        mailOpened = true;
+        envelope.classList.add("opened");
+        spawnRain(6500);
+        setTimeout(function () {
+          letterOverlay.classList.add("show");
+        }, 450);
+      }
+
+      envelope.addEventListener("click", openMail);
+      envelope.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openMail();
+        }
+      });
+
+      closeLetter.addEventListener("click", function () {
+        letterOverlay.classList.remove("show");
+        mailOverlay.classList.remove("visible");
+        envelope.classList.remove("opened");
+        rainLayer.innerHTML = "";
+        mailOpened = false;
+      });
+
+      mailOverlay.addEventListener("click", function (e) {
+        if (e.target === mailOverlay) {
+          mailOverlay.classList.remove("visible");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
